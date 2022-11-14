@@ -1,0 +1,11 @@
+[MASTER]
+fail_under=10.0
+
+[MESSAGES CONTROL]
+disable=C0103,
+        R0903,
+        W0511
+
+[MISCELLANEOUS]
+notes=FIXME,
+        TODO
