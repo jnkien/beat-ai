@@ -1,35 +1,57 @@
 """A method to play gym environments using human IO inputs."""
-import gym
-import time
-from pyglet import clock
-from nes_py._image_viewer import ImageViewer
-from dataclasses import dataclass
-import numpy as np
 import os
+import time
+from dataclasses import dataclass
+
+import gym
+import numpy as np
+from nes_py._image_viewer import ImageViewer
+from pyglet import clock
+
 
 @dataclass
 class SaveCallback():
+    """ A callback for saving the actions and states of an human run.
+    """
     save_path: str
-    
-    def __post_init__(self):
+
+    def __post_init__(self) -> None:
+        """After __init__() tasks.
+        """
         if self.save_path is not None:
             os.makedirs(self.save_path, exist_ok=True)
-    
-    def save_actions(self, actions: np.array) -> None:
+
+    def _save_actions(self, actions: np.array) -> None:
+        """ Save the actions in a txt file.
+
+        Args:
+            actions : actions done during all the steps
+        """
         np.savetxt(os.path.join(self.save_path, "actions.csv"), [int(action) for action in actions])
-    
-    def save_states(self, states: np.array) -> None:
+
+    def _save_states(self, states: np.array) -> None:
+        """ Save the states in a .npy file
+
+        Args:
+            states : states produced during all the steps
+        """
         np.save(os.path.join(self.save_path, 'states.npy'), states, allow_pickle=True)
-    
-    def call(self, states: np.array, actions: np.array):
-        self.save_states(states)
-        self.save_actions(actions)
+
+    def call(self, states: np.array, actions: np.array) -> None:
+        """ Save both actions and states.
+
+        Args:
+            states : states produced during all the steps
+            actions : actions done during all the steps
+        """
+        self._save_states(states)
+        self._save_actions(actions)
 
 # the sentinel value for "No Operation"
 _NOP = 0
 
 
-def play_human(env: gym.Env, callback=None):
+def play_human(env: gym.Env, callback=None) -> None: # pylint: disable=R0914
     """
     Play the environment using keyboard as a human.
 
@@ -91,14 +113,14 @@ def play_human(env: gym.Env, callback=None):
             action = keys_to_action.get(viewer.pressed_keys, _NOP)
             actions.append(action)
             states.append(state)
-            next_state, reward, done, _ = env.step(action)
+            next_state, _, done, _ = env.step(action)
             viewer.show(env.unwrapped.screen)
             state = next_state
             # shutdown if the escape key is pressed
             if viewer.is_escape_pressed:
                 break
         if callback is not None:
-                callback(states, actions)
+            callback(states, actions)
     except KeyboardInterrupt:
         pass
 

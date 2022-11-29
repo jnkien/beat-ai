@@ -1,5 +1,5 @@
 [MASTER]
-fail_under=10.0
+fail-under=10.0
 
 [MESSAGES CONTROL]
 disable=C0103,

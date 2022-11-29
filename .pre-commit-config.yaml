@@ -1,21 +1,21 @@
 default_language_version:
-    python: python3.10.8
+    python: python3.9.6
 repos:
     - repo: local
       hooks:
           - id: pylint
-              name: pylint
-              entry: pylint
-              args: ["--rcfile=.pylintrc"]
-              language: system
-              types: [python]
-              require_serial: true
+            name: pylint
+            entry: pylint
+            args: ["--rcfile=.pylintrc"]
+            language: system
+            types: [python]
+            require_serial: true
           - id: black
-              name: black
-              entry: black
-              language: system
+            name: black
+            entry: black
+            language: system
           - id: isort
-              name: isort
-              entry: isort
-              args: ["--profile", "black"]
-              language: system
+            name: isort
+            entry: isort
+            args: ["--profile", "black"]
+            language: system
