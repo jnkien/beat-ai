@@ -1,5 +1,7 @@
 """A method to play gym environments using human IO inputs."""
 import os
+import random
+import string
 import time
 from dataclasses import dataclass
 
@@ -18,8 +20,9 @@ class SaveCallback():
     def __post_init__(self) -> None:
         """After __init__() tasks.
         """
-        if self.save_path is not None:
-            os.makedirs(self.save_path, exist_ok=True)
+        run_hash = ''.join(random.choices(string.ascii_letters + string.digits, k=32))
+        self.save_path = os.path.join(self.save_path, run_hash)
+        os.makedirs(self.save_path, exist_ok=True)
 
     def _save_actions(self, actions: np.array) -> None:
         """ Save the actions in a txt file.
