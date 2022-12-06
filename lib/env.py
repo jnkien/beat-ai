@@ -16,10 +16,11 @@ def create_unstacked_env() -> SuperMarioBrosEnv:
     Returns:
         A SuperMarioBrosEnv object.
     """
-    env = gym_super_mario_bros.make('SuperMarioBros-v0')
+    env = gym_super_mario_bros.make("SuperMarioBros-v0")
     env = JoypadSpace(env, SIMPLE_MOVEMENT)
     env = GrayScaleObservation(env, keep_dim=True)
     return env
+
 
 def create_stacked_env() -> SuperMarioBrosEnv:
     """Create an stacked environement already preprocessed.
@@ -29,11 +30,12 @@ def create_stacked_env() -> SuperMarioBrosEnv:
     """
     env = create_unstacked_env()
     env = DummyVecEnv([lambda: env])
-    env = VecFrameStack(env, 4, channels_order='last')
+    env = VecFrameStack(env, 4, channels_order="last")
     return env
 
+
 def run(env: SuperMarioBrosEnv, model: BaseAlgorithm) -> None:
-    """ Play the environment given model predictions.
+    """Play the environment given model predictions.
 
     Args:
         env : an environement

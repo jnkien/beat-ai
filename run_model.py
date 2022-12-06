@@ -6,11 +6,11 @@ import lib.env
 
 
 def main():
-    """ Main function
-    """
+    """Main function"""
     env = lib.env.create_stacked_env()
-    model=PPO.load('ppo_mario.zip')
+    model = PPO.load("ppo_mario.zip")
     lib.env.run(env, model)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
