@@ -15,4 +15,10 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Install python dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run pylint
+        run: |
+          pylint **/*.py
       - run: echo "🍏 This job's status is ${{ job.status }}."
