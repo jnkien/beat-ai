@@ -7,9 +7,11 @@ jobs:
     steps:
       - name: Runner information
         run: |
-          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." |
-          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!" |
-          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+          echo """
+          🎉 The job was automatically triggered by a ${{ github.event_name }} event.
+          🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!
+          🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}.
+          """
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
