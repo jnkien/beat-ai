@@ -39,7 +39,7 @@ def learn(model_name: str, env: SuperMarioBrosEnv) -> BaseAlgorithm:
     """
     model = model_factory(model_name, env)
     model.learn(
-        total_timesteps=4_000_000, callback=TrainCallback(20_000, "./data/models/")
+        total_timesteps=4_000_000, callback=TrainCallback(5_000, "./data/models/")
     )
 
 
