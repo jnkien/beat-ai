@@ -1,4 +1,4 @@
-""" Train a model """
+""" Train a RL model """
 
 import yaml
 
@@ -6,8 +6,8 @@ import lib.env
 import lib.model
 
 
-def train():
-    """Train a model on an env"""
+def train_rl():
+    """Train a RL model on an env"""
 
     with open("config.yaml", encoding="utf-8") as f:
         config = yaml.load(f, Loader=yaml.BaseLoader)
@@ -17,4 +17,4 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    train_rl()
