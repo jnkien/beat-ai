@@ -21,7 +21,7 @@ class SaveCallback:
         """After __init__() tasks."""
         run_hash = "".join(random.choices(string.ascii_letters + string.digits, k=32))
         self.save_path = os.path.join(self.save_path, run_hash)
-        os.makedirs(self.save_path, exist_ok=True)
+        os.makedirs(self.save_path, exist_ok=False)
 
     def _save_actions(self, actions: np.array) -> None:
         """Save the actions in a txt file.
