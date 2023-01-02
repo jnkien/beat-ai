@@ -22,15 +22,18 @@ def create_unstacked_env() -> SuperMarioBrosEnv:
     return env
 
 
-def create_stacked_env() -> SuperMarioBrosEnv:
+def create_stacked_env(stacks: int) -> SuperMarioBrosEnv:
     """Create an stacked environement already preprocessed.
+
+    Args:
+        stacks: number of stacks for the env
 
     Returns:
         A SuperMarioBrosEnv object.
     """
     env = create_unstacked_env()
     env = DummyVecEnv([lambda: env])
-    env = VecFrameStack(env, 4, channels_order="last")
+    env = VecFrameStack(env, stacks, channels_order="last")
     return env
 
 
