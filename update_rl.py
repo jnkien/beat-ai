@@ -1,7 +1,6 @@
 """ Update a RL model """
 
 import os
-import re
 
 from stable_baselines3 import PPO
 
@@ -17,14 +16,8 @@ def update_rl():
     config = lib.utils.load_config(os.path.join(model_dir, "config.yaml"))
     env = lib.env.create_stacked_env(config["stacks"])
 
-    regexp = re.compile("^model_([0-9]*).zip$")
-    max_step_model = max(
-        int(regexp.search(x).group(1))
-        for x in os.listdir(model_dir)
-        if regexp.search(x)
-    )
-
-    model = PPO.load(os.path.join(model_dir, f"model_{max_step_model}.zip"))
+    model_path, max_step_model = lib.utils.get_last_rl_model_path(model_dir)
+    model = PPO.load(model_path)
     model.set_env(env)
 
     total_timesteps = config["total_timesteps"]
