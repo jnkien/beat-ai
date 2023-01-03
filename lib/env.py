@@ -1,6 +1,7 @@
 """ Facades to create environments """
 
 import gym_super_mario_bros
+import numpy as np
 from gym.wrappers.gray_scale_observation import GrayScaleObservation
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT
 from gym_super_mario_bros.smb_env import SuperMarioBrosEnv
@@ -37,16 +38,25 @@ def create_stacked_env(stacks: int) -> SuperMarioBrosEnv:
     return env
 
 
-def run(env: SuperMarioBrosEnv, model: BaseAlgorithm) -> None:
+def run(env: SuperMarioBrosEnv, model: BaseAlgorithm) -> np.array:
     """Play the environment given model predictions.
 
     Args:
         env : an environement
         model : a model
+
+    Returns:
+        The frames of the run
     """
+    states = []
     state = env.reset()
     done = False
-    while not done:
+    for _ in range(1000):  # limit the simulation
+        if done:
+            break
         action, _ = model.predict(state)
         state, _, done, _ = env.step(action)
+        states.append(state)
         env.render()
+    env.close()
+    return np.array(states)
