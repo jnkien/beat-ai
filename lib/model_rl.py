@@ -1,4 +1,4 @@
-""" Model related functions """
+""" Model RL related functions """
 
 import os
 import random
@@ -40,10 +40,10 @@ def learn(config: dict, env: SuperMarioBrosEnv) -> BaseAlgorithm:
     Returns:
         A learnt RL model
     """
-    model_name = config["model"]["name"]
-    total_timesteps = config["model"]["total_timesteps"]
-    freq_to_save = config["model"]["freq_to_save"]
-    save_path = config["model"]["save_path"]
+    model_name = config["name"]
+    total_timesteps = config["total_timesteps"]
+    freq_to_save = config["freq_to_save"]
+    save_path = config["save_path"]
 
     model = model_factory(model_name, env)
 

@@ -1,0 +1,8 @@
+seed: 1234
+stacks: 4
+batch_size: 100
+test_size: 0.2
+learning_rate: 0.001
+n_iters: 50
+data_path: "./data/human/"
+save_path: "./data/models/"

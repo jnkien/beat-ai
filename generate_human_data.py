@@ -1,7 +1,7 @@
 """ Let a human play the game """
 
 import lib.env
-import lib.model
+import lib.model_rl
 import lib.play_human
 import lib.utils
 

@@ -11,3 +11,4 @@ torchvision==0.14.0
 matplotlib==3.6.2
 stable-baselines3==1.6.2
 PyYAML==6.0
+scikit-learn==1.2.0

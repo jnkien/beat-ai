@@ -1,6 +1,0 @@
-model:
-  name: "PPO"
-  stacks: 4
-  total_timesteps: 4000000
-  freq_to_save: 5000
-  save_path: "./data/models/"
