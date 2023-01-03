@@ -2,6 +2,7 @@
 
 from typing import Tuple
 
+import numpy as np
 import pandas as pd
 import torch
 from torch import nn
@@ -34,6 +35,28 @@ class CNNModel(nn.Module):
         out = self.drop(out)
         out = self.fc2(out)
         return out
+
+    def predict(self, state: np.array) -> Tuple[np.array, None]:
+        """Predict the action given the state
+
+        Args:
+            state : the state
+
+        Returns:
+            The action predicted
+        """
+        states = np.array([state, state])
+        states = (
+            torch.from_numpy(states)  # pylint: disable=E1101
+            .permute(0, 1, 4, 2, 3)
+            .float()
+        )
+        data_loader = torch.utils.data.DataLoader(states, batch_size=2, shuffle=False)
+        for frames in data_loader:
+            outputs = self(frames)
+            predicted = torch.max(outputs.data, 1)[1]  # pylint: disable=E1101
+        action = np.array([predicted[0]])
+        return action, None  # for compatibility reason with RL models
 
     def save(self, path: str) -> None:
         """Save the model

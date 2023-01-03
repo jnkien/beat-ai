@@ -6,7 +6,6 @@ from gym.wrappers.gray_scale_observation import GrayScaleObservation
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT
 from gym_super_mario_bros.smb_env import SuperMarioBrosEnv
 from nes_py.wrappers import JoypadSpace
-from stable_baselines3.common.base_class import BaseAlgorithm
 from stable_baselines3.common.vec_env.dummy_vec_env import DummyVecEnv
 from stable_baselines3.common.vec_env.vec_frame_stack import VecFrameStack
 
@@ -38,7 +37,7 @@ def create_stacked_env(stacks: int) -> SuperMarioBrosEnv:
     return env
 
 
-def run(env: SuperMarioBrosEnv, model: BaseAlgorithm) -> np.array:
+def run(env: SuperMarioBrosEnv, model) -> np.array:
     """Play the environment given model predictions.
 
     Args:
