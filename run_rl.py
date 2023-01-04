@@ -2,6 +2,7 @@
 
 import os
 
+import pandas as pd
 from stable_baselines3 import PPO
 
 import lib.env
@@ -14,12 +15,20 @@ def run_rl():
     config = lib.utils.load_config(os.path.join(model_dir, "config.yaml"))
 
     env = lib.env.create_stacked_env(config["stacks"])
-    model_path, _ = lib.utils.get_last_rl_model_path(model_dir)
+    model_path, max_step_model = lib.utils.get_last_rl_model_path(model_dir)
     model = PPO.load(model_path)
 
-    states = lib.env.run(env, model)
+    states, x_pos = lib.env.run(env, model)
     states = states[:, 0, :, :, 3]
-    lib.utils.states_to_mp4(states, os.path.join(model_dir, "run.mp4"))
+    lib.utils.states_to_mp4(
+        states, os.path.join(model_dir, f"run_rl_{max_step_model}.mp4")
+    )
+
+    pd.DataFrame(x_pos).to_csv(
+        os.path.join(model_dir, f"x_pos_rl_{max_step_model}.csv"),
+        header=None,
+        index=None,
+    )
 
 
 if __name__ == "__main__":

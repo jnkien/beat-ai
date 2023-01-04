@@ -1,5 +1,7 @@
 """ Facades to create environments """
 
+from typing import List, Tuple
+
 import gym_super_mario_bros
 import numpy as np
 from gym.wrappers.gray_scale_observation import GrayScaleObservation
@@ -37,7 +39,7 @@ def create_stacked_env(stacks: int) -> SuperMarioBrosEnv:
     return env
 
 
-def run(env: SuperMarioBrosEnv, model) -> np.array:
+def run(env: SuperMarioBrosEnv, model) -> Tuple[np.array, List[int]]:
     """Play the environment given model predictions.
 
     Args:
@@ -45,17 +47,19 @@ def run(env: SuperMarioBrosEnv, model) -> np.array:
         model : a model
 
     Returns:
-        The frames of the run
+        The frames and Mario's x position in the stage
     """
     states = []
+    x_pos = []
     state = env.reset()
     done = False
     for _ in range(1000):  # limit the simulation
         if done:
             break
         action, _ = model.predict(state)
-        state, _, done, _ = env.step(action)
+        state, _, done, info = env.step(action)
         states.append(state)
+        x_pos.append(info[0]["x_pos"])
         env.render()
     env.close()
-    return np.array(states)
+    return np.array(states), x_pos
