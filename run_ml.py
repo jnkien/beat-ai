@@ -19,7 +19,7 @@ def run_ml():
     model = lib.model_ml.CNNModel(len(gym_super_mario_bros.actions.SIMPLE_MOVEMENT), 1)
     model.load_state_dict(torch.load(os.path.join(model_dir, "model_cnn.pyt")))
 
-    states = lib.env.run(env, model)
+    states, _ = lib.env.run(env, model)
     states = states[:, 0, :, :, 3]
     lib.utils.states_to_mp4(states, os.path.join(model_dir, "run.mp4"))
 
