@@ -248,3 +248,27 @@ def get_max_step_rl_model(model_dir: str) -> str:
         for x in os.listdir(model_dir)
         if regexp.search(x)
     )
+
+
+def generate_x_pos_fig(path: str, out_path: str) -> None:
+    """Generate the figure of the distance travelled by Mario
+
+    Example:
+        generate_x_pos_fig("data/models/50bkOHBpXFl2RnGJVImI1MzvI9iXvF26", 'img/x_pos.png')
+
+    Args:
+        path : path of the x_pos files
+        out_path : path of the figure
+    """
+    regexp = re.compile("x_pos_rl_([0-9]*).csv")
+
+    x_pos = {}
+    for file in [f for f in os.listdir(path) if ".csv" in f]:
+        x_pos_i = pd.read_csv(os.path.join(path, file), header=None)
+        x_pos[f"{regexp.search(file).group(1)} frames"] = np.array(x_pos_i[0])
+
+    for k, item in x_pos.items():
+        plt.plot(np.arange(item.shape[0]), item, label=k)
+    plt.legend()
+    plt.savefig(out_path)
+    plt.close()
