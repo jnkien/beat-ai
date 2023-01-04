@@ -233,19 +233,18 @@ def transform_data(  # pylint: disable=R0914
     return train_loader, test_loader
 
 
-def get_last_rl_model_path(model_dir: str) -> Tuple[str, str]:
+def get_max_step_rl_model(model_dir: str) -> str:
     """Get the last RL model path
 
     Args:
         model_dir : the directory to search in
 
     Returns:
-        The path and the max step of the model
+        The max step available for the model
     """
     regexp = re.compile("^model_([0-9]*).zip$")
-    max_step_model = max(
+    return max(
         int(regexp.search(x).group(1))
         for x in os.listdir(model_dir)
         if regexp.search(x)
     )
-    return os.path.join(model_dir, f"model_{max_step_model}.zip"), max_step_model
