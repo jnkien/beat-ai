@@ -170,7 +170,6 @@ def load_human_data(data_path: str) -> Tuple[np.array, List[np.array]]:
     )
 
     actions = np.array(actions[0])
-    actions = actions.astype(int)
     return actions, states
 
 

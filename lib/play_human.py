@@ -4,9 +4,11 @@ import random
 import string
 import time
 from dataclasses import dataclass
+from typing import List
 
 import gym
 import numpy as np
+import pandas as pd
 from nes_py._image_viewer import ImageViewer
 from pyglet import clock
 
@@ -23,15 +25,14 @@ class SaveCallback:
         self.save_path = os.path.join(self.save_path, run_hash)
         os.makedirs(self.save_path, exist_ok=False)
 
-    def _save_actions(self, actions: np.array) -> None:
+    def _save_actions(self, actions: List[int]) -> None:
         """Save the actions in a txt file.
 
         Args:
             actions : actions done during all the steps
         """
-        np.savetxt(
-            os.path.join(self.save_path, "actions.csv"),
-            [int(action) for action in actions],
+        pd.DataFrame(actions).to_csv(
+            os.path.join(self.save_path, "actions.csv"), header=None, index=None
         )
 
     def _save_states(self, states: np.array) -> None:
@@ -42,7 +43,7 @@ class SaveCallback:
         """
         np.save(os.path.join(self.save_path, "states.npy"), states, allow_pickle=True)
 
-    def call(self, states: np.array, actions: np.array) -> None:
+    def call(self, states: np.array, actions: List[int]) -> None:
         """Save both actions and states.
 
         Args:
